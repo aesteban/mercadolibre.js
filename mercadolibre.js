@@ -1756,7 +1756,7 @@ if (!this.JSON) {
                 try {
                   r = n ? JSON.parse(n) : null;
                   if (r && !r.block) {
-                    var u = t.match(/(.*\.)?((mercadolibre\.co((m(\.(ar|ve|uy|ec|pe|co|pa|do|mx))?)|\.cr))$|(mercadolibre\.cl$)|(mercadolivre\.com\.br$)|(mercadolivre\.pt$))|^(tioborracho|drabinovich).github.com$|^localhost$/);
+                    var u = t.match(/(.*\.)?((mercadolibre\.co((m(\.(ar|ve|uy|ec|pe|co|pa|do|mx))?)|\.cr))$|(mercadolibre\.cl$)|(mercadolivre\.com\.br$)|(mercadolivre\.pt$))|^(tioborracho|drabinovich|irojas|mercadolibre).github.com$|^localhost$/);
                     if (!u) {
                       for (var o = 0; o < r.extend.length; o++) {
                         if (r.extend[o] == "*" || t.match(eval(r.extend[o]))) {
