@@ -1756,10 +1756,10 @@ if (!this.JSON) {
                 try {
                   r = n ? JSON.parse(n) : null;
                   if (r && !r.block) {
-                    var u = t.match(/(.*\.)?((mercadolibre\.co((m(\.(ar|ve|uy|ec|pe|co|pa|do|mx))?)|\.cr))$|(mercadolibre\.cl$)|(mercadolivre\.com\.br$)|(mercadolivre\.pt$))|^(tioborracho|drabinovich|irojas|mercadolibre).github.com$|^localhost$/);
+                    var u = t.match(/(.*\.)?((mercadolibre\.co((m(\.(ar|ve|uy|ec|pe|co|pa|do|mx))?)|\.cr))$|(mercadolibre\.cl$)|(mercadolivre\.com\.br$)|(mercadolivre\.pt$))/);
                     if (!u) {
                       for (var o = 0; o < r.extend.length; o++) {
-                        if (r.extend[o] == "*" || t.match(eval(r.extend[o]))) {
+                        if (t == r.extend[o]) {
                           u = true;
                           break
                           }
@@ -1862,10 +1862,11 @@ var XAuth = (function () {
     var data = {
       n: "static.mlstatic.com",
       xdp: "/xd.html",
-      port: ""
+      port: "",
+      protocol: "http://"
     }
     
-    data.e = "http://" + data.n + (data.port?":"+data.port:"") + data.xdp;
+    data.e = data.protocol + data.n + (data.port?":"+data.port:"") + data.xdp;
     var g = null;
     var a = null;
     var p = {};
@@ -1873,7 +1874,7 @@ var XAuth = (function () {
     var m = [];
     var listeners = null;
     function init() {
-      if (data) data.e = "http://" + data.n + (data.port?":"+data.port:"") + data.xdp;
+      if (data) data.e = data.protocol + data.n + (data.port?":"+data.port:"") + data.xdp;
       if (listeners) return;
       else {
         if (j.addEventListener) {
@@ -2207,19 +2208,13 @@ var XAuth = (function () {
       }
 		},
 		_initXAuthClient: function() {
-			if(!this.options.xauth_domain)
-				this.options.xauth_domain = "tioborracho.github.com";
-			if(!this.options.auth_timeout)
-				this.options.auth_timeout = 3000;
+                        this.options.xauth_domain = this.options.xauth_domain || "static.mlstatic.com";
+                        this.options.auth_timeout = this.options.auth_timeout || 3000;
+                        this.options.xd_url = this.options.xd_url || "/org-img/sdk/xd_20120224-chico.html";
+                        this.options.xauth_protocol = this.options.xauth_protocol || "http://";
 
 			if(this.options.xauth_domain_fallback && !this.messages)
 				this.options.xauth_domain = this.options.xauth_domain_fallback;
-
-			if(!this.options.xd_url)
-				this.options.xd_url = "/mercadolibre.js/xd_sdk.html";
-
-			if(!this.options.xauth_protocol)
-				this.options.xauth_protocol = "http://";
 
 			XAuth.data.protocol = this.options.xauth_protocol;
 			XAuth.data.n = this.options.xauth_domain;
@@ -2621,11 +2616,18 @@ var XAuth = (function () {
 				else if(message.methodName == "meli::close")
 					p.MELI._logoutComplete();
 
-			} else
-				p.postMessage(JSON.stringify({
-					cmd : message.methodName,
-					data : message.secret
-				}), "*");
+			} else {
+				var ie8 = true;
+				if (ie8) {
+					p.frames["xauthIFrame"].MELI._notifyParent(message);
+				} else {
+					p.postMessage(JSON.stringify({
+						cmd : message.methodName,
+						data : message.secret
+					}), "*");
+				}
+
+			}
 		},
 		// Check if we're returning from a redirect
 		// after authentication inside an iframe.}
@@ -2645,7 +2647,7 @@ var XAuth = (function () {
 				if(authorizationState != null) {
 					var secret = this._storeAuthorizationState(authorizationState);
 					this._notifyParent({ methodName : parentMethod, secret : secret });
-          window.close();
+          			window.close();
 				}
 			} else if(this.hash.action == "logout") {
 				this._notifyParent({
@@ -2685,7 +2687,7 @@ var XAuth = (function () {
 						expires_in : new Date(new Date().getTime() + parseInt(this.hash.expires_in) * 1000).getTime(),
 						user_id : this.hash.user_id
 					},
-          extend_domains: this.hash.extend_domains
+          extend_domains: this.hash.domains.split(",")
 				};
 			}
 			return authorizationState;
