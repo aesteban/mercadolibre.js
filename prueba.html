@@ -52,7 +52,7 @@
     var loadData = null;
 
   window.mlAsyncInit = function() {
-    MELI.init({client_id: 4105});
+    MELI.init({client_id: 4105, xd_url:"/mercadolibre.js/xd_sdk.html", xauth_domain:"tioborracho.github.com"});
     
     
   };
@@ -61,7 +61,7 @@
   (function(d){
      var js, id = 'meli-jssdk'; if (d.getElementById(id)) {return;}
      js = d.createElement('script'); js.id = id; js.async = true;
-     js.src = "http://static.mlstatic.com/org-img/sdk/mercadolibre-201203122.min.js";
+     js.src = "http://tioborracho.github.com/mercadolibre.js/mercadolibre.js;"
      d.getElementsByTagName('head')[0].appendChild(js);
    }(document));
 </script>
