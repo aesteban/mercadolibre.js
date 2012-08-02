@@ -1,0 +1,36 @@
+<html>
+	<head>
+		<script>
+		var listeners = null;
+		function popup() {
+			var width = 830;
+			var height = 510;
+			var left = parseInt((screen.availWidth - width) / 2);
+			var top = parseInt((screen.availHeight - height) / 2);
+			this._popupWindow = (window.open("http://domain2.com:8080/inner.html", "", "toolbar=no,status=no,location=yes,menubar=no,resizable=no,scrollbars=no,width=" + width + ",height=" + height + ",left=" + left + ",top=" + top + "screenX=" + left + ",screenY=" + top));
+				
+		}
+		function report(m) {
+			alert(m);
+		}
+		function init() {
+	      if (listeners) return;
+    	  else {
+        	if (window.addEventListener) {
+            	window.addEventListener("message", report, false)
+        	} else {
+            	if (window.attachEvent) {
+                	window.attachEvent("onmessage", report)
+            	}
+        	}
+        	listeners = true;
+      	  }
+    	}
+
+		</script>
+	</head>
+	<body onload="init();">
+		<iframe id="ifff" src="http://domain2.com:8080/inner.html"></iframe>
+		<button onclick="popup();">Apretame</button>
+	</body>
+</html>
