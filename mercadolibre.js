@@ -2794,7 +2794,7 @@ var XAuth = (function () {
 		_xd_url : function() {
 			return this.options.xauth_protocol + this.options.xauth_domain + (this.options.xauth_port ? ":" + this.options.xauth_port : "") + this.options.xd_url;
 		},
-                _isIE8 : function () {
+        _isIE8 : function () {
             function getInternetExplorerVersion()
                 // Returns the version of Internet Explorer or a -1
                 // (indicating the use of another browser).
@@ -2811,7 +2811,6 @@ var XAuth = (function () {
                 }
             var version = getInternetExplorerVersion();
             return (version >= 8.0 && version < 9.0);
-            }
         }
 	};
 
