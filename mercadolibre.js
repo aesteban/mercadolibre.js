@@ -2210,7 +2210,7 @@ var XAuth = (function () {
 		_initXAuthClient: function() {
                         this.options.xauth_domain = this.options.xauth_domain || "static.mlstatic.com";
                         this.options.auth_timeout = this.options.auth_timeout || 3000;
-                        this.options.xd_url = this.options.xd_url || "/org-img/sdk/xd_20120224-chico.html";
+                        this.options.xd_url = this.options.xd_url || "/org-img/sdk/xd-1.0.4.html";
                         this.options.xauth_protocol = this.options.xauth_protocol || "http://";
 
 			if(this.options.xauth_domain_fallback && !this.messages)
@@ -2794,24 +2794,24 @@ var XAuth = (function () {
 		_xd_url : function() {
 			return this.options.xauth_protocol + this.options.xauth_domain + (this.options.xauth_port ? ":" + this.options.xauth_port : "") + this.options.xd_url;
 		},
-        _isIE8 : function () {
-            function getInternetExplorerVersion()
-                // Returns the version of Internet Explorer or a -1
-                // (indicating the use of another browser).
-                {
-                  var rv = -1; // Return value assumes failure.
-                  if (navigator.appName == 'Microsoft Internet Explorer')
-                  {
-                    var ua = navigator.userAgent;
-                    var re  = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
-                    if (re.exec(ua) != null)
-                      rv = parseFloat( RegExp.$1 );
-                  }
-                  return rv;
-                }
-            var version = getInternetExplorerVersion();
-            return (version >= 8.0 && version < 9.0);
-        }
+		_isIE8 : function () {
+			function getInternetExplorerVersion()
+				// Returns the version of Internet Explorer or a -1
+				// (indicating the use of another browser).
+				{
+				  var rv = -1; // Return value assumes failure.
+				  if (navigator.appName == 'Microsoft Internet Explorer')
+				  {
+				    var ua = navigator.userAgent;
+				    var re  = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+				    if (re.exec(ua) != null)
+				      rv = parseFloat( RegExp.$1 );
+				  }
+				  return rv;
+				}
+			var version = getInternetExplorerVersion();
+			return (version >= 8.0 && version < 9.0);
+		}
 	};
 
 	MELI._parseHash();
