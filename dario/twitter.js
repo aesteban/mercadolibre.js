@@ -4,6 +4,7 @@ JQTWEET = {
     user: 'MeliStatus',
     numTweets: 5,
     appendTo: '#jstwitter',
+    globalStatus: '#globalStatus',
  
     // core function of jqtweet
     loadTweets: function() {
@@ -23,6 +24,14 @@ JQTWEET = {
                  
                  // append tweets into page
                  for (var i = 0; i < data.length; i++) {
+                    if (i ==0 ) {
+                      $(JQTWEET.globalStatus).html(
+
+                          JQTWEET.ify.lightColor(data[i].text).replace('TWEET_TEXT', JQTWEET.ify.clean(data[i].text) )
+                          + " " + JQTWEET.ify.statusText(data[i].text) 
+                          );
+
+                    };
                     $(JQTWEET.appendTo).append(
                         html.replace('STATUS_IMAGE', JQTWEET.ify.lightColor(data[i].text))
                             .replace('TWEET_TEXT', JQTWEET.ify.clean(data[i].text) )
@@ -139,6 +148,19 @@ JQTWEET = {
             rsp = '<IMG src="icn-yellow.png"/>';
           else if (match[2] == "green")
             rsp = '<IMG src="icn-green.png"/>';
+          return rsp;
+        };
+      },
+      statusText: function(tweet) {
+        var match = tweet.match(/(^|\s+)#(red|green|yellow)(\ |$)/);
+        var rsp = "API is ";
+        if (match) {
+          if (match[2] == "red")
+            rsp += 'down';
+          else if (match[2] == "yellow")
+            rsp += 'having some problems';
+          else if (match[2] == "green")
+            rsp += 'up and running';
           return rsp;
         };
       },
